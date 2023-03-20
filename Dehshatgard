@@ -1,0 +1,46 @@
+import requests
+
+import json
+
+# Specify the post ID
+
+post_id = "<POST_ID>"  # Replace with the ID of the post you want to fetch likes for
+
+# Specify the access token
+
+access_token = "<ACCESS_TOKEN>"  # Replace with your Facebook access token
+
+# Set the URL for the API endpoint to fetch post likes
+
+url = "https://graph.facebook.com/v13.0/" + post_id + "/likes?fields=name,username&access_token=" + access_token
+
+# Send a GET request to the API endpoint
+
+response = requests.get(url)
+
+# Load the JSON response data
+
+data = json.loads(response.text)
+
+# Create a new file to store the usernames and names of Facebook users who have liked the post
+
+file_name = "post_likes.txt"
+
+f = open(file_name, "w")
+
+# Loop through the data and extract the usernames and names of the Facebook users who have liked the post
+
+for user in data["data"]:
+
+    username = user["username"]
+
+    name = user["name"]
+
+    # Write the username and name of the Facebook user to the file
+
+    f.write(username + "," + name + "\n")
+
+# Close the file
+
+f.close()
+
